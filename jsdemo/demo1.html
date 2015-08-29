@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>demo1</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+    <h1>获取字符串中字符的最大个数及字符</h1>
+
+     <pre>
+      例如  	var str=''assssfdererdsdsgseres";
+
+     	<input type="	text"  id="J_input" value="assssfdererdsdsgseres" />
+     	<input type="button" value="点击获取(字符串方法)" onclick="method1()">
+     	<input type="button" value="点击获取(正则方法)" onclick="method2()">
+     </pre>
+     <script>	
+
+        function method1(){
+         var  str=document.getElementById("J_input").value;
+         if(str){
+         	  var  obj={};
+         	  var  num=0;
+         	  var value=0;
+
+         	  var length=str.length;
+         	  for(var i=0;i<length;i++){
+
+         	  	if(!obj[str.charAt(i)]){
+         	  		obj[str.charAt(i)]=[];
+         	  	}
+         	  obj[str.charAt(i)].push(obj[str.charAt(i)])
+         	  }
+
+         	  for(v in obj){
+
+         	  	if(num<obj[v].length){
+         	  		num=obj[v].length;
+         	  		value=v;
+         	  	}
+         	  }
+
+         	  alert(value+":"+num);
+         }
+        }
+
+        function method2(){
+           var str=document.getElementById("J_input").value;
+           if(str){
+           	var  num=0;
+           	var value=0;
+           	var attr=str.split("").sort();
+           	var newstr=attr.join("");
+           	var reg=/(.)(\1)+/g;
+           	newstr.replace(reg,function($0,$1){
+                          if(num<$0.length){
+                          	num=$0.length;
+                          	value=$1;
+                          }
+           	})
+
+           	alert(value+":"+num);
+           }
+
+        }
+       
+     </script>
+</body>
+</html>
