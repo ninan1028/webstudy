@@ -1,0 +1,111 @@
+
+
+
+//注释
+//  这一种 编译的时候会自动过滤掉
+/***这样的注释不会**/
+
+//变量
+@bg:red;
+#example{ background:@bg;}
+//混合
+.border{  border:1px solid blue;}
+
+.left(@left) { margin-left:@left } // 带有参数的函数
+.top(@top:10px){ margin-top:@top;}  // 带有默认参数的函数 
+.box{ .border; width:10px; height: 300px; .left(10px); .top()}  // 在此调用 如果使用函数默认调用的时候都加上()
+
+//css3 实现 三角形
+.sanjiao{
+  width:0;
+  height:0;
+  overflow: hidden;
+  border-width: 10px;
+  border-color:transparent transparent red transparent;
+  border-style:dashed dashed solid dashed;
+
+}
+//匹配模式  有一个变量来进行区分
+.trans(top,@w:10px,@c:red){
+  border-width: @w;
+  border-color:transparent transparent @c transparent;
+  border-style:dashed dashed solid dashed;
+}
+.trans(left,@w:10px,@c:red){
+  border-width: @w;
+  border-color:transparent transparent transparent @c ;
+  border-style:dashed dashed  dashed solid;
+}
+
+.trans(right,@w:10px,@c:red){
+  border-width: @w;;
+  border-color:transparent  @c transparent transparent;
+  border-style:dashed solid dashed  dashed;
+}
+
+.trans(bottom,@w:10px,@c:red){
+  border-width: @w;
+  border-color: @c transparent transparent  transparent;
+  border-style: solid dashed dashed  dashed;
+}
+.trans(@_,@w:10px,@c:red){  // 这样定义 每一个匹配模式都将使用到该样式 
+  width:0;
+  height:0;
+  overflow: hidden;
+}
+.top{ .trans(top);}  // 调用的时候传入参数
+.left{ .trans(left);}
+.right{ .trans(right);}
+.bottom{ .trans(bottom);}
+
+
+// 运算
+// less 中的运算
+//---任何数字,颜色或者变量都可以参与运算,运算应该被包括在括号中. 例如 + - * /
+// 可以任意的计算
+@mainwidth:100px;
+.main1 { width:@mainwidth+20;}
+.main2 { width:@mainwidth+20px;}  // 都可以
+
+//2 嵌套
+// 写样式时 可在样式内直接嵌套
+
+ .list{
+   width:300px;
+   height:300px;
+   li{
+     li-style:none;
+     line-height: 24px;
+     a{
+       float:left;
+       &:hover{ color:red;} // & 表示上一级的选择符
+     }
+   }
+ }
+//3 @arguments 表示传入的所有参数
+
+ .test_border(@width:2px,@type:solid,@c:red){
+   border:@arguments;
+ }
+
+.myborder{ .test_border();}
+
+
+// !important 关键字
+// 会给所有混合所带来的样式添加上 !important
+
+.test_important {.test_border() !important; }
+
+
+//避免编译 用 波浪线 在前面标识
+.test_02{ ~width:1px;}
+
+.css3{
+   width:100px;
+  height:200px;
+  border:1px solid red;
+  transform:rotate(30deg);
+}
+
+
+
