@@ -16,10 +16,10 @@
     
 </body> 
 <script>
-	var str='12323232323';
 
-	 function method1(str){
-              
+	var str='12323232323';
+ // 两种方法 一种普通流
+	 function method1(str){              
               if(!str) return;
               var length=str.length;
               var prev="";
@@ -47,10 +47,9 @@
 
 	 }
 
-
+ // 第二种使用正则表达式
 	 function method2(str){
                if(!str) return;
-
               return   str.replace(/(?=(?!\b)(\d{3})+$)/g,",")
 	 }
 
