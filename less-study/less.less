@@ -107,5 +107,11 @@
   transform:rotate(30deg);
 }
 
+// 属性变量 如果是属性变量 需要 @{name} 来表示 
+.px2rem(@name, @px){
+    @{name}: @px  / 75 * 1rem;
+}
+
+
 
 
