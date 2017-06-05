@@ -1,0 +1,95 @@
+<html>
+ <head>
+ <title>模板语法</title>
+ </head>
+ <body>
+   <div id="app">
+     <h2>文本</h2>
+     {{message}}
+     <h2>纯html</h2>
+     <!-- 纯html -->
+     <div v-html="prehtml" ></div>
+
+     <!-- 属性  -->
+     <h2>属性</h2>
+     <div v-bind:id="property"> 绑定属性</div>  
+
+     <!-- 使用javascript表达式 -->
+     <h2>使用javascript表达式</h2>
+       <div>
+         {{num+1}} <br>
+         {{ok?'true':'false'}}  
+       </div>
+
+       <div  v-bind:id="'item'+itemid"> 拼接id
+       </div>
+
+       <h2>指令 带有v-前缀的特殊属性指令的职责就是当其表达式的值改变时相应地将某些行为应用到 DOM 上 </h2>
+       <p v-if="seen">Now you see me</p>
+       <button v-on:click="toggle" >toggle</button>
+      <br>
+       <h2> 过滤器 用作文本的格式化 一般用在 插值表达式中 也可以在 v-bind表达式中 (从2.1.0支持)</h2>
+
+        <div> {{money | formatmoney}}   </div>
+
+        <div v-bind:id='newid | formatid'>id格式化</div>
+
+        <h2>缩写</h2>
+
+        <!-- 完整语法 -->
+           <a v-bind:href="url">百度</a> <br>
+             <!-- 缩写 -->
+           <a :href="url">百度</a>
+           <br>
+
+           <!-- 完整语法 -->
+            <a v-on:click="alert">点击</a><br>
+             <!-- 缩写 -->
+            <a @click="alert">点击</a>
+
+
+   </div>
+  <script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>  
+  <script>
+  // 实例
+   var  vue=new Vue({   // 选项 包含 数据 模板  挂载元素 方法 生命周期钩子等选项
+   	  el:'#app',
+   	  data:{
+   	  	message:'hello vue',
+        prehtml:'<h3>展示html</h3>',
+        property:'J_bind',
+        num:1,
+        ok:true,
+        itemid:'1',
+        seen:true,
+        money:100,
+        newid:'newid',
+        url:'http:www.baidu.com'
+   	  },
+      methods:{
+        alert:function(){
+          alert(1);
+        },
+        toggle:function(){
+          this.seen=!this.seen;
+        }
+
+      },
+      filters:{
+        formatmoney:function(value){
+           return (value/100).toFixed(2)
+        },
+        formatid:function(value){
+           return 'h_'+value;
+        }
+      }
+   })
+
+  
+
+
+
+   
+  </script>
+ </body>
+</html>

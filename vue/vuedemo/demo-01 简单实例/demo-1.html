@@ -4,16 +4,50 @@
  </head>
  <body>
    <div id="app">
-     {{message}}
+     <!-- 数据绑定语法  Mustache 双大括号 最基础的绑定-->
+     {{message}}   
+     <div v-on:click="alert">展示数据</div>
    </div>
   <script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>  
   <script>
-   var  vue=new Vue({
+  // 实例
+   var  vue=new Vue({   // 选项 包含 数据 模板  挂载元素 方法 生命周期钩子等选项
    	  el:'#app',
    	  data:{
    	  	message:'hello vue'
-   	  }
+   	  },
+      methods:{
+        alert:function(){
+          alert(1);
+        }
+      }
    })
+
+   // 里面的data 可以在外部定义
+   
+   var data={a:1};
+   var vm=new Vue({
+     data:data
+   })
+
+    console.log(vm.a===data.a);
+    //设置属性 对象 会相互影响
+    
+    vm.a=2; 
+    console.log(data.a);
+
+    data.a=3;
+    console.log(vm.a)
+
+
+
+    // 注意 只有这些被代理的属性时响应的.如果在实例创建之后,添加新的属性到实例上,它不会触发视图更新
+    // 受 ES5 的限制，Vue.js 不能检测到对象属性的添加或删除。因为 Vue.js 在初始化实例时将属性转为 getter/setter，所以属性必须在 data 对象上才能让 Vue.js 转换它，才能让它是响应的。
+    //在实例创建之后添加属性可以通过 $set(object,key, value) 实例方法让它是响应的。对于普通数据对象，可以使用全局方法 Vue.set(object, key, value)
+    
+    vm.$set(data,'b',2); 
+    // 或者全局方法 
+    Vue.set(data,'c',{'d':1});
   </script>
  </body>
 </html>
