@@ -25,7 +25,11 @@
        </div>
 
        <h2>指令 带有v-前缀的特殊属性指令的职责就是当其表达式的值改变时相应地将某些行为应用到 DOM 上 </h2>
-       <p v-if="seen">Now you see me</p>
+       <p v-if="seen">v-if</p>
+       <p v-if="!seen">else</p>
+
+       <p v-show="seen">v-show</p>
+       <p v-show="!seen">v-show else</p>
        <button v-on:click="toggle" >toggle</button>
       <br>
        <h2> 过滤器 用作文本的格式化 一般用在 插值表达式中 也可以在 v-bind表达式中 (从2.1.0支持)</h2>
@@ -48,6 +52,39 @@
             <a @click="alert">点击</a>
 
 
+           <h2>列表渲染 v-for</h2>
+
+           <ul>
+            <li   v-for="(item,index) in arrobjdata" >
+              {{index+1}}:{{item.name}}
+            </li>
+           </ul>
+
+           <ul>
+            <li v-for="(value,key,index) in obj">
+             {{value}}:{{key}}:{{index+1}}
+            </li>
+           </ul>
+
+           <ul>
+             <li v-for="(value,index) in arrdata">
+                  {{value}}:{{index+1}}
+             </li>
+           </ul>
+
+           <h2>指令</h2>
+
+            <p>自定义指令</p>
+
+            <p> v-text  v-html  v-if v-else v-else-if</p>
+
+            <input v-model="message"> {{message}}
+
+
+            <br>
+            <input type="text" v-focus style="width:100px; height:30px;">
+
+
    </div>
   <script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>  
   <script>
@@ -64,7 +101,24 @@
         seen:true,
         money:100,
         newid:'newid',
-        url:'http:www.baidu.com'
+        url:'http:www.baidu.com',
+        arrobjdata:[
+         {
+          name:'five'
+         },
+         {
+          name:'even'
+         },
+         {
+          name:'three'
+         }
+        ],
+        obj:{
+          name:'jay',
+          age:'23'
+
+        },
+        arrdata:['hello','vue']
    	  },
       methods:{
         alert:function(){
@@ -81,6 +135,13 @@
         },
         formatid:function(value){
            return 'h_'+value;
+        }
+      },
+      directives:{
+        focus:{
+          inserted:function(el){
+            el.focus();
+          }
         }
       }
    })
