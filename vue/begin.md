@@ -61,8 +61,81 @@ var myFilter = Vue.filter('my-filter')
 new Vue({
   el:'',
   filters:{
-    
+    formatPrice:function(value){
+			return (value/100).toFixed(2);
+		}
   }
 })
   ~~~~
+
+
+
+#### 4 class
+
+  class 绑定  有几种方式 
+
+ 1 直接绑定 data
+
+~~~~
+<div v-bind:class="{ active: isActive }"></div>
+~~~~
+
+ 当 isActive为真时 active 添加到class
+
+2 绑定 object
+
+~~~~javascript
+<div v-bind:class="classObject"></div>
+
+data: {
+  classObject: {
+    active: true,
+    'text-danger': false
+  }
+}
+~~~~
+
+ 还可以使用计算属性 这是相当强大的一个属性
+
+~~~~
+data: {
+  isActive: true,
+  error: null
+},
+computed: {
+  classObject: function () {
+    return {
+      active: this.isActive && !this.error,
+      'text-danger': this.error && this.error.type === 'fatal',
+    }
+  }
+}
+~~~~
+
+
+
+3 绑定数组
+
+~~~~
+<div v-bind:class="[activeClass, errorClass]">
+
+data: {
+  activeClass: 'active',
+  errorClass: 'text-danger'
+}
+~~~~
+
+ 数组这里对应是class数据
+
+ 如果有条件判断可以使用 三元表达式
+
+~~~~javascript
+<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+~~~~
+
+ 在数组中也可以使用对象语法
+
+~~~~javascript
+<div v-bind:class="[{ active: isActive }, errorClass]">
+~~~~
 

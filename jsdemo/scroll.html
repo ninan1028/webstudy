@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>js滚动穿透</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="" rel="stylesheet">
+    <style>
+    body {
+        font-size: 26px;
+        width:100%;
+    }
+    
+    .block {
+        width: 80%;
+        height: 800px
+    }
+    
+    body.modal-open {
+         position: fixed; 
+         width: 100%;
+    }
+    
+    .modal {
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: none;
+    }    
+    .modal-frame {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 50%;
+        transform: translateY(-50%);
+        border: solid 1px #ddd;
+        background: #fff;
+        padding: 1em;
+        width:200px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="open-modal">点击出现弹窗</div>
+    <div class="block">
+        1111
+    </div>
+    <div class="block">
+        222
+    </div>
+    <div class="block">
+        3333
+    </div>
+    <div class="open-modal">
+        点击出现弹窗
+    </div>
+     <div class="block">
+        4444
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-frame">
+            <div style="height:9em;overflow-y:auto;">
+                这里是可滚动内容
+                <br> Modal Content
+                <br> Modal Content
+                <br> Modal Content
+                <br> Modal Content
+                <br> Modal Content
+                <br> Modal Content
+                <br> Modal Content
+                <br> Modal Content
+                <br> Modal Content
+                <br> Modal Content
+                <br> Modal Content
+                <br>
+            </div>
+        </div>
+    </div>
+    <script>
+    /**
+     * ModalHelper helpers resolve the modal scrolling issue on mobile devices
+     * https://github.com/twbs/bootstrap/issues/15852
+     * requires document.scrollingElement polyfill https://github.com/yangg/scrolling-element
+     */
+    var ModalHelper = (function(bodyCls) {
+        var scrollTop;
+        return {
+            afterOpen: function() {
+                scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+                document.body.classList.add(bodyCls);
+                document.body.style.top = -scrollTop + 'px';
+            },
+            beforeClose: function() {
+                document.body.classList.remove(bodyCls);
+                // scrollTop lost after set position:fixed, restore it back.
+                //document.scrollingElement.scrollTop = scrollTop;
+                document.body.style.top = 0;
+                document.body.scrollTop = scrollTop;
+                document.documentElement.scrollTop = scrollTop;
+            }
+        };
+    })('modal-open');
+
+    function openModal() {
+        document.getElementById('modal').style.display = 'block';
+        ModalHelper.afterOpen();
+    }
+
+    function closeModal() {
+        ModalHelper.beforeClose();
+        document.getElementById('modal').style.display = 'none';
+    }
+    var btns = document.querySelectorAll('.open-modal');
+    btns[0].onclick = openModal;
+    btns[1].onclick = openModal;
+    document.querySelector('#modal').onclick = closeModal;
+    </script>
+</body>
+
+</html>
