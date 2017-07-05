@@ -34,7 +34,7 @@
         display: none;
     }    
     .modal-frame {
-        position: absolute;
+        position: fixed;
         left: 10%;
         right: 10%;
         top: 50%;
@@ -43,6 +43,7 @@
         background: #fff;
         padding: 1em;
         width:200px;
+        display:none;
     }
     </style>
 </head>
@@ -64,8 +65,8 @@
      <div class="block">
         4444
     </div>
-    <div id="modal" class="modal">
-        <div class="modal-frame">
+    <div id="modal" class="modal"></div>
+       <div id="modal-frame" class="modal-frame">
             <div style="height:9em;overflow-y:auto;">
                 这里是可滚动内容
                 <br> Modal Content
@@ -82,7 +83,6 @@
                 <br>
             </div>
         </div>
-    </div>
     <script>
     /**
      * ModalHelper helpers resolve the modal scrolling issue on mobile devices
@@ -110,12 +110,18 @@
 
     function openModal() {
         document.getElementById('modal').style.display = 'block';
+        document.getElementById('modal-frame').style.display = 'block';
+        document.getElementById('modal').addEventListener('touchmove',function(){
+            //alert(1);
+            return false; // 添加return false 不起作用
+        },false)
         ModalHelper.afterOpen();
     }
 
     function closeModal() {
         ModalHelper.beforeClose();
         document.getElementById('modal').style.display = 'none';
+         document.getElementById('modal-frame').style.display = 'none';
     }
     var btns = document.querySelectorAll('.open-modal');
     btns[0].onclick = openModal;
